@@ -1,0 +1,147 @@
+
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+
+% Core packages
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[spanish]{babel}
+\usepackage{tikz-cd}
+\usepackage{physics,exercise,cancel}
+\usepackage{bm}
+\usepackage{dsfont}
+\usepackage{multicol}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathmorphing, patterns}
+
+% Paragraphs
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1\baselineskip}
+
+% Problems
+\theoremstyle{definition}
+\newtheorem*{problem}{Problema}
+
+% Equation numbering
+\numberwithin{equation}{section}
+
+\title{Ayudantía MMF II}
+\author{Jovanny Jara}
+\date{29 de mayo de 2026}
+
+\begin{document}
+\maketitle
+
+\section{Ecuación de Laplace en cilíndricas: Ortogonalidad de las funciones de Bessel de primera especie $J_n$}
+
+Queremos demostrar la relación de ortogonalidad para las funciones de Bessel de primera especie $J_n(x)$ dada por
+\begin{equation}
+	\int_0^a J_n(k_{nj}r/a)J_n(k_{ni}r/a)r\dd{r}= \frac{a^2}{2}\delta_{ij} [J'_n(k_{ni})]^2 = \frac{a^2}{2}\delta_{ij}[J_{n+1}(k_{ni})]^2,
+\end{equation}
+donde $k_{ni}$ y $k_{nj}$ son los i-ésimos y j-ésimos ceros de la n-ésima función de Bessel $J_n(x)$  respectivamente, es decir, $J_n(k_{ni}) = J_n(k_{nj}) = 0$.
+\begin{proof}
+	Para simplificar la notación durante el desarrollo, definimos
+	\begin{equation}
+		\alpha \equiv \frac{k_{ni}}{a}, \quad \beta \equiv \frac{k_{nj}}{a}.
+	\end{equation}
+	De este modo, $J_n(\alpha a) = J_n(\beta a) = 0$.
+
+	Recordemos ahora la ecuación de Bessel en su forma Sturm-Liouville:
+	\begin{equation}
+		\dv{r}\left( r \dv{R}{r} \right) + \left( -\frac{n^2}{r} + \alpha^2 r \right) R = 0.
+	\end{equation}
+	La teoría de Sturm-Liuville nos garantiza que, en un intervalo dado, dos autofunciones de un operador autoadjunto con distintos autovalores, $\lambda_i \neq \lambda_j$, son ortogonales con respecto a una funcion de peso, es decir, que en nuestro caso el producto interno entre las funciones de Bessel,
+	\begin{equation}
+		\int_0^a J_n\left(\frac{k_{nj}}{a}r\right)J_n\left(\frac{k_{ni}}{a}r\right)r\dd{r} = 0 \qc i\neq j,
+	\end{equation}
+	donde el hecho de que $i\neq j$ implica que $\alpha\neq\beta$, y obtenemos la contribución de la delta de Kronecker $\delta_{ij}$. Ahora, bajo esta misma condicion, si analizamos el caso $i=j$ tenemos que evaluar la integral $\int_0^a [J_n(k_{ni}r/a)]^2 rdr$.
+
+	Volvamos a la ecuación de Bessel. Si multiplicamos la ecuación (1.3) por $2rR'$, tenemos que
+	\begin{equation}
+		2r R' \dv{r}(r R') + 2\alpha^2 r^2 R R' - 2n^2 R R' = 0,
+	\end{equation}
+	donde $R' = \dv*{R}{r}$. Notemos que
+	\begin{align}
+		2r R' \dv{r}(r R') & = \dv{r} \left[ (rR')^2 \right], \\
+		2\alpha^2 r^2 R R' & = \alpha^2 r^2 \dv{r} (R^2),     \\
+		2n^2 R R'          & = n^2 \dv{r} (R^2).
+	\end{align}
+	Entonces, podemos reescribir la ecuación (1.5) de la siguiente manera,
+	\begin{equation}
+		\dv{r} \left[ (rR')^2 \right] + (\alpha^2 r^2 - n^2) \dv{r} (R^2) = 0.
+	\end{equation}
+	Integramos en el intervalo $[0,a]$,
+	\begin{equation}
+		\int_0^a \dv{r} \left[ (rR')^2 \right] \dd{r} + \int_0^a (\alpha^2 r^2 - n^2) \dv{r} (R^2) \dd{r} = 0.
+	\end{equation}
+	La primera integral es directa por el teorema fundamental del cálculo; en la segunda integramos por partes con $u = \alpha^2 r^2 - n^2$ y $dv = \dv{r}(R^2) \dd{r}$ y nos queda
+	\begin{equation}
+		\left[ (rR')^2 \right]_0^a + \left[ (\alpha^2 r^2 - n^2) R^2 \right]_0^a - \int_0^a R^2 (2\alpha^2 r) \dd{r} = 0.
+	\end{equation}
+	Evaluamos en los límites: En $r = a$, $R(a) = J_n(\alpha a) = J_n(k_{ni}) = 0$ y el segundo término se anula en el límite superior. El primero queda $a^2 [y'(a)]^2$. En $r = 0$, tanto $R'(r)$ como $R(r)$ se anulan por la definición de $J_n(x)$. Así, la expresión se reduce a
+	\begin{equation}
+		a^2 [R'(a)]^2 - 2\alpha^2 \int_0^a [J_n(\alpha r)]^2 r\dd{r} = 0.
+	\end{equation}
+	Notemos que, si $R(r) = J_n(\alpha r)$, entonces $R'(r) = \alpha J'_n(\alpha r) \implies R'(a) = \alpha J'_n(\alpha a) = \alpha J'_n(k_{ni})$. Entonces, reordenando lo anterior obtenemos
+	\begin{equation}
+		\int_0^a [J_n(\alpha r)]^2 r\dd{r} = \frac{a^2}{2\alpha^2} \left[ \alpha J'_n(k_{ni}) \right]^2 = \frac{a^2}{2} [J'_n(k_{ni})]^2,
+	\end{equation}
+	que es la integral que buscabamos evaluar. Con esto, ya tenemos demostrada la primera igualdad para la ortogonalidad de las funciones de bessel,
+	\begin{equation}
+		\boxed{\int_0^a J_n(k_{nj}r/a)J_n(k_{ni}r/a)r\dd{r}= \frac{a^2}{2}\delta_{ij} [J'_n(k_{ni})]^2}
+	\end{equation}
+
+	Para obtener la segunda igualdad, necesitamos trabajar con la definición en serie de potencias de las funciones de Bessel de primera especie de orden $n$:
+	\begin{equation}
+		J_n(x) = \sum_{m=0}^{\infty} \frac{(-1)^m}{m!(m+n)!} \left(\frac{x}{2}\right)^{2m+n}.
+	\end{equation}
+	Calculamos la derivada,
+	\begin{equation}
+		J'_n(x) = \sum_{m=0}^{\infty} \frac{(-1)^m}{m!(m+n)!} (2m+n) \left( \frac{1}{2} \right) \left(\frac{x}{2}\right)^{2m+n-1}.
+	\end{equation}
+	Notemos que podemos separar la serie en dos por el término $(2m+n)$,
+	\begin{equation}
+		J'_n(x) = \sum_{m=0}^{\infty} \frac{(-1)^m}{m!(m+n)!}\left(\frac{n}{2}\right) \left(\frac{x}{2}\right)^{2m+n-1} + \sum_{m=0}^{\infty} \frac{(-1)^m\cdot m}{m!(m+n)!} \left(\frac{x}{2}\right)^{2m+n-1}.
+	\end{equation}
+	Analicemos la primera sumatoria de la expresión anterior. Si multiplicamos y dividimos por $x$, podemos hacer,
+	\begin{equation}
+		\frac{n}{2} \left(\frac{x}{2}\right)^{2m+n-1} = \frac{n}{x} \left(\frac{x}{2}\right) \left(\frac{x}{2}\right)^{2m+n-1} = \frac{n}{x} \left(\frac{x}{2}\right)^{2m+n},
+	\end{equation}
+	y sacando el término $n/x$ fuera de la sumatoria, obtenemos
+	\begin{equation}
+		\frac{n}{x} \sum_{m=0}^{\infty} \frac{(-1)^m}{m!(m+n)!} \left(\frac{x}{2}\right)^{2m+n} = \frac{n}{x} J_n(x).
+	\end{equation}
+	Para la segunda sumatoria notemos que para $m=0$ esta se anula, entonces podemos cambiar el limite inferior a $m=1$. Esto nos permite cancelar el $m$ del numerador con el primer componente del factorial del denominador, utilizando la propiedad $m! = m(m-1)!$
+	\begin{equation}
+		\sum_{m=0}^{\infty} \frac{(-1)^m\cdot m}{m!(m+n)!} \left(\frac{x}{2}\right)^{2m+n-1} = \sum_{m=1}^{\infty} \frac{(-1)^m}{(m-1)!(m+n)!} \left(\frac{x}{2}\right)^{2m+n-1}.
+	\end{equation}
+	Si hacemos un cambio de variable $k = m-1$, obtenemos
+	\begin{equation}
+		\sum_{m=1}^{\infty} \frac{(-1)^m}{(m-1)!(m+n)!} \left(\frac{x}{2}\right)^{2m+n-1} = -\sum_{k=0}^{\infty} \frac{(-1)^k}{k!(k+n+1)!} \left(\frac{x}{2}\right)^{2k+(n+1)}.
+	\end{equation}
+	Comparando esta expresión con la ecuación (1.15), podemos ver que tiene la forma de una función de Bessel de orden $n+1$, entonces
+	\begin{equation}
+		J_{n+1}(x) = -\sum_{k=0}^{\infty} \frac{(-1)^k}{k!(k+n+1)!} \left(\frac{x}{2}\right)^{2k+(n+1)} = -J_{n+1}(x).
+	\end{equation}
+	Combinando las dos expresiones, llegamos a que la derivada de la función de Bessel es
+	\begin{equation}
+		J'_n(x) = \frac{n}{x} J_n(x) - J_{n+1}(x).
+	\end{equation}
+	Evaluamos esta identidad en los ceros de la función, $x = k_{ni}$:
+	\begin{equation}
+		J'_n(k_{ni}) = \frac{n}{k_{ni}} J_n(k_{ni}) - J_{n+1}(k_{ni}).
+	\end{equation}
+	Recordemos que $J_n(k_{ni}) = 0$, entonces
+	\begin{equation}
+		J'_n(k_{ni}) = -J_{n+1}(k_{ni}).
+	\end{equation}
+	Elevamos al cuadrado y obtenemos
+	\begin{equation}
+		[J'_n(k_{ni})]^2 = [J_{n+1}(k_{ni})]^2.
+	\end{equation}
+	Sustituyendo finalmente este resultado en la ecuación (1.14), se obtiene la segunda igualdad del enunciado:
+	\begin{equation}
+		\boxed{\int_0^a J_n(k_{nj}r/a)J_n(k_{ni}r/a)r\dd{r}= \frac{a^2}{2}\delta_{ij} [J'_n(k_{ni})]^2 = \frac{a^2}{2}\delta_{ij}[J_{n+1}(k_{ni})]^2}
+	\end{equation}
+\end{proof}
+
+\end{document}

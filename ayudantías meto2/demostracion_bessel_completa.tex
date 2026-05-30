@@ -1,0 +1,173 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{Demostración: Ortogonalidad, Normalización y Relaciones de Recurrencia de las Funciones de Bessel en el marco de Sturm-Liouville}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Introducción y Planteamiento}
+El objetivo es demostrar la relación de ortogonalidad y normalización para las funciones de Bessel de primera especie $J_n$, dada por:
+\begin{equation}
+	\int_0^a J_n(k_{nj}r/a)J_n(k_{ni}r/a)rdr = \frac{a^2}{2}\delta_{ij} [J'_n(k_{ni})]^2 = \frac{a^2}{2}\delta_{ij}[J_{n+1}(k_{ni})]^2
+\end{equation}
+donde $k_{ni}$ y $k_{nj}$ son los ceros de la función de Bessel $J_n(x)$, es decir, $J_n(k_{ni}) = 0$ y $J_n(k_{nj}) = 0$.
+
+Para simplificar la notación durante el desarrollo, definiremos las constantes:
+\begin{equation}
+	\alpha = \frac{k_{ni}}{a}, \quad \beta = \frac{k_{nj}}{a}
+\end{equation}
+De este modo, las funciones bajo estudio son $y_i(r) = J_n(\alpha r)$ y $y_j(r) = J_n(\beta r)$, con las condiciones de frontera $y_i(a) = y_j(a) = 0$.
+
+\section{El Marco de Sturm-Liouville y la Ortogonalidad ($i \neq j$)}
+La ecuación diferencial de Bessel para $y(r) = J_n(\alpha r)$ se expresa ordinariamente como:
+\begin{equation}
+	r^2 y'' + r y' + (\alpha^2 r^2 - n^2) y = 0
+\end{equation}
+Dividiendo por $r$, podemos escribirla en la forma auto-adjunta o forma estándar de Sturm-Liouville, $[p(r)y']' + [q(r) + \lambda w(r)]y = 0$:
+\begin{equation}
+	\frac{d}{dr}\left( r \frac{dy}{dr} \right) + \left( -\frac{n^2}{r} + \alpha^2 r \right) y = 0
+\end{equation}
+A partir de esta forma, identificamos los elementos del sistema de Sturm-Liouville:
+\begin{itemize}
+	\item Función de ponderación (peso): $w(r) = r$
+	\item Coeficiente principal: $p(r) = r$
+	\item Función potencial: $q(r) = -\frac{n^2}{r}$
+	\item Parámetro del eigenvalor: $\lambda = \alpha^2$
+\end{itemize}
+
+La teoría general de Sturm-Liouville establece que para un operador auto-adjunto con condiciones de frontera homogéneas en un intervalo $[0, a]$, las eigenfunciones correspondientes a eigenvalores distintos ($\alpha \neq \beta$, lo cual implica $i \neq j$) son ortogonales respecto a la función de peso $w(r)$. Por lo tanto:
+\begin{equation}
+	\int_0^a J_n\left(\frac{k_{nj}}{a}r\right) J_n\left(\frac{k_{ni}}{a}r\right) r \, dr = 0 \quad \text{para } i \neq j
+\end{equation}
+Este resultado valida la presencia de la delta de Kronecker $\delta_{ij}$ en la expresión general.
+
+\section{Condición de Normalización ($i = j$)}
+Cuando $i = j$, se tiene $\alpha = \beta$. Para evaluar la integral del cuadrado de la función, partimos de la ecuación diferencial en forma de Sturm-Liouville para $y(r) = J_n(\alpha r)$:
+\begin{equation}
+	\frac{d}{dr}(r y') + \left(\alpha^2 r - \frac{n^2}{r}\right) y = 0
+\end{equation}
+Multiplicamos toda la ecuación por el factor $2r y'$:
+\begin{equation}
+	2r y' \frac{d}{dr}(r y') + 2\alpha^2 r^2 y y' - 2n^2 y y' = 0
+\end{equation}
+Reconocemos que cada uno de estos términos representa una derivada total respecto a $r$:
+\begin{align}
+	2r y' \frac{d}{dr}(r y') & = \frac{d}{dr} \left[ r^2 (y')^2 \right] \\
+	2\alpha^2 r^2 y y'       & = \alpha^2 r^2 \frac{d}{dr} (y^2)        \\
+	2n^2 y y'                & = n^2 \frac{d}{dr} (y^2)
+\end{align}
+Sustituyendo estas identidades, obtenemos:
+\begin{equation}
+	\frac{d}{dr} \left[ r^2 (y')^2 \right] + (\alpha^2 r^2 - n^2) \frac{d}{dr} (y^2) = 0
+\end{equation}
+Procedemos a integrar ambos miembros en el intervalo $[0, a]$:
+\begin{equation}
+	\int_0^a \frac{d}{dr} \left[ r^2 (y')^2 \right] dr + \int_0^a (\alpha^2 r^2 - n^2) \frac{d}{dr} (y^2) dr = 0
+\end{equation}
+El primer término se integra de forma directa por el Teorema Fundamental del Cálculo. Para el segundo término, aplicamos integración por partes definiendo $u = \alpha^2 r^2 - n^2$ y $dv = \frac{d}{dr}(y^2) dr$, lo que implica $du = 2\alpha^2 r \, dr$ y $v = y^2$:
+\begin{equation}
+	\left[ r^2 (y')^2 \right]_0^a + \left[ (\alpha^2 r^2 - n^2) y^2 \right]_0^a - \int_0^a y^2 (2\alpha^2 r) \, dr = 0
+\end{equation}
+Evaluamos los límites de integración:
+\begin{itemize}
+	\item En $r = a$: Por hipótesis, $y(a) = J_n(\alpha a) = J_n(k_{ni}) = 0$. Esto anula por completo el segundo término evaluado en el límite superior. El primer término nos proporciona $a^2 [y'(a)]^2$.
+	\item En $r = 0$: El término $r^2 (y')^2$ se desvanece debido al factor $r^2$ (dado que $y'(0)$ es finito para todo $n \ge 0$). Asimismo, para el segundo término, si $n > 0$, $y(0) = 0$; si $n = 0$, el factor $(\alpha^2 r^2 - n^2)$ se reduce a $0$ en $r=0$. En cualquier caso, el límite inferior es nulo.
+\end{itemize}
+De este modo, la ecuación se reduce a:
+\begin{equation}
+	a^2 [y'(a)]^2 - 2\alpha^2 \int_0^a r [J_n(\alpha r)]^2 dr = 0
+\end{equation}
+Despejando la integral de interés:
+\begin{equation}
+	\int_0^a r [J_n(\alpha r)]^2 dr = \frac{a^2}{2\alpha^2} [y'(a)]^2
+\end{equation}
+Aplicando la regla de la cadena a la función original $y(r) = J_n(\alpha r)$, su derivada es $y'(r) = \alpha J'_n(\alpha r)$. Al evaluar en $r = a$:
+\begin{equation}
+	y'(a) = \alpha J'_n(\alpha a) = \alpha J'_n(k_{ni})
+\end{equation}
+Sustituyendo este resultado en la expresión de la integral:
+\begin{equation}
+	\int_0^a r [J_n(\alpha r)]^2 dr = \frac{a^2}{2\alpha^2} \left[ \alpha J'_n(k_{ni}) \right]^2 = \frac{a^2}{2} [J'_n(k_{ni})]^2
+\end{equation}
+Combinando esto con la condición de ortogonalidad obtenida en la sección anterior, queda demostrada la primera igualdad:
+\begin{equation}
+	\int_0^a J_n(k_{nj}r/a)J_n(k_{ni}r/a)rdr = \frac{a^2}{2}\delta_{ij} [J'_n(k_{ni})]^2
+\end{equation}
+
+\section{Deducción de la Relación de Recurrencia}
+Para fundamentar rigurosamente la transición a la última igualdad, deduciremos la relación diferencial de recurrencia a partir de la definición en serie de potencias de las funciones de Bessel de primera especie de orden $n$:
+\begin{equation}
+	J_n(x) = \sum_{m=0}^{\infty} \frac{(-1)^m}{m!(m+n)!} \left(\frac{x}{2}\right)^{2m+n}
+\end{equation}
+Derivando término a término respecto a $x$ mediante la regla de la cadena, se obtiene:
+\begin{equation}
+	J'_n(x) = \sum_{m=0}^{\infty} \frac{(-1)^m}{m!(m+n)!} (2m+n) \left( \frac{1}{2} \right) \left(\frac{x}{2}\right)^{2m+n-1}
+\end{equation}
+El factor lineal $(2m+n)$ dentro del sumatorio se puede separar de forma aditiva en dos sumas distintas:
+\begin{equation}
+	J'_n(x) = \sum_{m=0}^{\infty} \frac{(-1)^m n}{2 \cdot m!(m+n)!} \left(\frac{x}{2}\right)^{2m+n-1} + \sum_{m=0}^{\infty} \frac{(-1)^m 2m}{2 \cdot m!(m+n)!} \left(\frac{x}{2}\right)^{2m+n-1}
+\end{equation}
+
+Analicemos la primera sumatoria de la expresión anterior. Multiplicando y dividiendo convenientemente por $x$, podemos reescribir el exponente para recuperar la forma original de $J_n(x)$:
+\begin{equation}
+	\frac{n}{2} \left(\frac{x}{2}\right)^{2m+n-1} = \frac{n}{x} \left(\frac{x}{2}\right) \left(\frac{x}{2}\right)^{2m+n-1} = \frac{n}{x} \left(\frac{x}{2}\right)^{2m+n}
+\end{equation}
+Extrayendo el factor común $\frac{n}{x}$ fuera del operador de suma, identificamos plenamente la serie de $J_n(x)$:
+\begin{equation}
+	\text{Suma}_1 = \frac{n}{x} \sum_{m=0}^{\infty} \frac{(-1)^m}{m!(m+n)!} \left(\frac{x}{2}\right)^{2m+n} = \frac{n}{x} J_n(x)
+\end{equation}
+
+Para la segunda sumatoria, simplificamos el factor $\frac{2m}{2} = m$. Puesto que el término correspondiente a $m=0$ se anula, modificamos el límite inferior del índice a $m=1$. Esto nos permite cancelar la variable $m$ con el primer componente del factorial del denominador, utilizando la propiedad $m! = m(m-1)!$:
+\begin{equation}
+	\text{Suma}_2 = \sum_{m=1}^{\infty} \frac{(-1)^m}{(m-1)!(m+n)!} \left(\frac{x}{2}\right)^{2m+n-1}
+\end{equation}
+Efectuamos un cambio de variable para los índices definiendo $k = m - 1$ (de donde $m = k + 1$). Bajo esta transformación:
+\begin{itemize}
+	\item El límite inferior $m=1$ se convierte en $k=0$.
+	\item El factor alternante $(-1)^m$ pasa a ser $(-1)^{k+1} = -(-1)^k$.
+	\item El factorial $(m+n)!$ se reescribe como $(k+n+1)!$.
+	\item El exponente de la potencia se transforma en $2(k+1)+n-1 = 2k+(n+1)$.
+\end{itemize}
+Sustituyendo estos nuevos términos en la sumatoria:
+\begin{equation}
+	\text{Suma}_2 = -\sum_{k=0}^{\infty} \frac{(-1)^k}{k!(k+n+1)!} \left(\frac{x}{2}\right)^{2k+(n+1)}
+\end{equation}
+Esta última estructura matemática coincide de manera exacta con la definición en serie de la función de Bessel de orden $n+1$. Por consiguiente:
+\begin{equation}
+	\text{Suma}_2 = -J_{n+1}(x)
+\end{equation}
+
+Combinando los resultados obtenidos para ambas sumatorias ($\text{Suma}_1 + \text{Suma}_2$), se demuestra la identidad fundamental de recurrencia diferencial:
+\begin{equation}
+	J'_n(x) = \frac{n}{x} J_n(x) - J_{n+1}(x)
+\end{equation}
+
+\section{Finalización de la Demostración del Ejercicio}
+Una vez establecida rigurosamente la relación de recurrencia, procedemos a evaluarla específicamente en los puntos críticos dados por las raíces, es decir, $x = k_{ni}$:
+\begin{equation}
+	J'_n(k_{ni}) = \frac{n}{k_{ni}} J_n(k_{ni}) - J_{n+1}(k_{ni})
+\end{equation}
+Haciendo uso de la condición de frontera fundamental del problema, $J_n(k_{ni}) = 0$, el primer término de la derecha se anula idénticamente, dando lugar a:
+\begin{equation}
+	J'_n(k_{ni}) = -J_{n+1}(k_{ni})
+\end{equation}
+Al elevar al cuadrado ambos miembros de la ecuación, el signo negativo se disipa por propiedades algebraicas elementales:
+\begin{equation}
+	[J'_n(k_{ni})]^2 = [J_{n+1}(k_{ni})]^2
+\end{equation}
+Sustituyendo finalmente este resultado en la integral de normalización obtenida en la Sección 3, se alcanza el resultado definitivo plasmado en el enunciado original:
+\begin{equation}
+	\int_0^a J_n(k_{nj}r/a)J_n(k_{ni}r/a)rdr = \frac{a^2}{2}\delta_{ij}[J_{n+1}(k_{ni})]^2
+\end{equation}
+Q.E.D.
+
+\end{document}
