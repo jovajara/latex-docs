@@ -31,13 +31,84 @@
 \begin{document}
 \maketitle
 
+\section{Fórmula de Rodrigues para los Polinomios de Legendre: Demostración}
+
+Buscamos demostrar la fórmula de Rodrigues para los polinomios de Legendre, 
+\begin{equation}
+	P_n(x) = \frac{1}{2^n n!} \dv[n]{x} (x^2 - 1)^n.
+\end{equation}
+
+\begin{proof}
+	Comenzamos desde la fórmula general de Rodrigues para polinomios ortogonales $y_n(x)$, definidos para un intervalo $[a,b]$,
+	\begin{equation}
+    y_n(x) = \frac{C_n}{w(x)} \dv[n]{x} \left[ w(x) (p(x))^n \right],
+	\end{equation}
+	siendo $C_n$ una constante de normalización, $w(x)$ una función peso y $p(x)$ un polinomio de grado 2, estos dos últimos definidos de tal manera que 
+	\begin{equation}
+    \dv{x} [p(x) w(x)] = q(x) w(x),
+	\end{equation}
+	con $q(x)$ un polinomio de grado 1.
+
+	Los polinomios de Legendre $P_n(x)$ son soluciones a la ecuación diferencial de Legendre, de la cual conocemos el peso $w(x) = 1$ y el polinomio $p(x) = 1 - x^2$. Sustituyendo estos valores en la fórmula general de Rodrigues, obtenemos
+	\begin{equation}
+    P_n(x) = \frac{C_n}{1} \dv[n]{x} \left[ 1 \cdot (1 - x^2)^n \right] = C_n \dv[n]{x} (1 - x^2)^n.
+	\end{equation}
+	Para determinar la constante de normalización $C_n$, utilizamos la condición estándar de normalización para los polinomios de Legendre, $P_n(x=1) = 1$. Luego, necesitamos calcular la $n$-ésima derivada de $(1 - x^2)^n$ evaluada en $x = 1$. Para esto, factorizamos el término para facilitar la derivación
+	\begin{equation}
+		(1 - x^2)^n = [-(x^2 - 1)]^n = (-1)^n (x - 1)^n (x + 1)^n,
+	\end{equation}
+	y hacemos uso de la regla de Leibniz (la regla del producto generalizada):
+	\begin{equation}
+		(fg)^{(n)}(x) = \sum_{k=0}^{n} \binom{n}{k} f^{(k)} g^{(n-k)}.
+	\end{equation}
+	entonces, reemplazamos
+	\begin{equation}
+		(fg)^{(n)}(x) =  \sum_{k=0}^{n} \binom{n}{k} \dv[k]{x} (x - 1)^n \cdot \dv[n-k]{x} (x + 1)^n
+	\end{equation}
+	y evaluamos en $x = 1$. Para $(x-1)^n$, tenemos que
+	\begin{equation}
+		\dv[k]{x} \eval{(x-1)^n}_{x=1}= n(n-1)\cdots(n-k+1)\eval{(x-1)^{n-k}}_{x=1}.
+	\end{equation}
+	Notemos que se anulan todas las derivadas de orden $k < n$, ya que queda un término $(x - 1)$ el cual se anula al evaluar en $x = 1$. Por lo tanto, el único término que contribuye a la suma es el término con $k = n$ y nos queda
+	\begin{equation}
+		(fg)^{(n)}(1) = \binom{n}{n} \cdot \left( \left. \dv[n]{x} (x-1)^n \right|_{x=1} \right) \cdot \left( \left. \dv[0]{x} (x+1)^n \right|_{x=1} \right).
+	\end{equation}
+	Acá deCalculamos las partes
+	\begin{enumerate}
+		\item $\binom{n}{n} = 1$,
+		\item $\frac{d^n}{dx^n} (x-1)^n = n!$,
+		\item $(x+1)^n$ evaluado en $x = 1$ es $(1+1)^n = 2^n$,
+	\end{enumerate}
+	por lo tanto,
+	\begin{equation}
+    \left. \dv[n]{x} (x^2 - 1)^n \right|_{x=1} = n! \cdot 2^n.
+	\end{equation}
+	Recordemos que nuestra función original era $(-1)^n (x^2 - 1)^n$. Entonces,
+	\begin{equation}
+    \left. \dv[n]{x} (1 - x^2)^n \right|_{x=1} = (-1)^n n! \cdot 2^n.
+	\end{equation}
+	Así, la condición $P_n(1) = 1$,
+	\begin{equation}
+    P_n(1) = C_n \cdot (-1)^n \cdot n! \cdot 2^n = 1 \implies C_n = \frac{1}{(-1)^n n! 2^n} = \frac{(-1)^n}{2^n n!}.
+	\end{equation}
+	Por ultimo, reemplazamos $C_n$ en la ecuación (2.4),
+	\begin{equation}
+    P_n(x) = \frac{(-1)^n}{2^n n!} \dv[n]{x} (1 - x^2)^n.
+	\end{equation}
+	Como $(-1)^n$ es una constante, lo podemos meter en la derivada y viendo que $(-1)^n (1 - x^2)^n = [-(1 - x^2)]^n = (x^2 - 1)^n$, obtenemos
+	\begin{equation}
+    \boxed{ P_n(x) = \frac{1}{2^n n!} \dv[n]{x} (x^2 - 1)^n }
+	\end{equation}
+	que es la fórmula de Rodrigues para los polinomios de Legendre.
+\end{proof}
+
 \section{Ecuación de Laplace en cilíndricas: Ortogonalidad de las funciones de Bessel de primera especie $J_n$}
 
 Queremos demostrar la relación de ortogonalidad para las funciones de Bessel de primera especie $J_n(x)$ dada por
 \begin{equation}
 	\int_0^a J_n(k_{nj}r/a)J_n(k_{ni}r/a)r\dd{r}= \frac{a^2}{2}\delta_{ij} [J'_n(k_{ni})]^2 = \frac{a^2}{2}\delta_{ij}[J_{n+1}(k_{ni})]^2,
 \end{equation}
-donde $k_{ni}$ y $k_{nj}$ son los i-ésimos y j-ésimos ceros de la n-ésima función de Bessel $J_n(x)$  respectivamente, es decir, $J_n(k_{ni}) = J_n(k_{nj}) = 0$.
+donde $k_{ni}$ y $k_{nj}$ son los $i$-ésimos y $j$-ésimos ceros de la n-ésima función de Bessel $J_n(x)$  respectivamente, es decir, $J_n(k_{ni}) = J_n(k_{nj}) = 0$.
 \begin{proof}
 	Para simplificar la notación durante el desarrollo, definimos
 	\begin{equation}
