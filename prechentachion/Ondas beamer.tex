@@ -1,0 +1,144 @@
+\documentclass{beamer}
+
+\usetheme{Szeged}
+\usecolortheme{beaver}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish, mexico]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{txfonts}
+\usepackage{subcaption}
+\usepackage[T1]{fontenc}
+
+\usepackage[absolute,overlay]{textpos}
+\usepackage{physics,bm}
+\usepackage{enumerate}
+\usepackage{rsfso}
+\usepackage{graphicx,url,twoopt,natbib}
+
+\setbeamertemplate{blocks}[rounded][shadow]
+\setbeamercolor{block body}{bg=example text.fg!10}
+\setbeamercolor{block title}{bg=example text.fg!20}
+\setbeamercolor{block body alerted}{bg=alerted text.fg!10}
+\setbeamercolor{block title alerted}{bg=alerted text.fg!20}
+\setbeamertemplate{caption}[numbered]
+
+\title[Visualización de orbitales del átomo de Helio mediante Hartree-Fock]{VISUALIZACIÓN DE ORBITALES DEL ÁTOMO DE HELIO POR EL MÉTODO DE HARTREE-FOCK}
+\author[J. Jara]{Jovanny Jara}
+\institute [Optimización y Programación GPU]{
+Facultad de Ciencias \\
+Licenciatura en Física \\
+Universidad de Valparaíso
+}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+    \titlepage  
+\end{frame}
+
+\begin{frame}{Objetivo del proyecto}
+    El objetivo principal del proyecto es resolver la ecuación de Schrödinger para el átomo de Helio para obtener sus energías permitidas y visualizar dichos estados.
+\end{frame}
+
+\begin{frame}{Problema a resolver}
+    Atomo de Helio: dos electrones + núcleo $\to$ Problema de n cuerpos. \ \alert{No hay solución exacta!} 
+    \pause
+    \\\vspace{4mm} Necesitamos método numérico. $\to$ \alert{Hartree-Fock}
+\end{frame}
+
+\begin{frame}{Método de Hartree-Fock}
+    El Hamiltoniano del Helio (en unidades atómicas):
+    \begin{equation}
+        \hat{\mathrm{H}} = \frac{1}{2}\nabla_1^2 + \frac{1}{2}\nabla_2^2 + \frac{Z}{\text{r}_1} + \frac{Z}{\text{r}_2} + \frac{1}{\text{r}_{12}}
+    \end{equation}
+    \pause 
+    \\ El último término es la repulsión entre los electrones. \alert{Nos acopla el problema.}
+\end{frame}
+
+\begin{frame}{Método de Hartree-Fock}
+    Idea central del método:
+    \begin{itemize}
+        \item Cada electrón se mueve en un potencial promedio (campo medio) generado por el otro electrón
+    \end{itemize}
+    \alert{Consecuencia:} Podemos aproximar la función de onda total como el producto de dos orbitales de un solo cuerpo.
+    \begin{equation}
+        \boxed{\Psi(\text{r}_1, \text{r}_2) \approx \phi(\text{r}_1)\phi(\text{r}_2)}
+    \end{equation}
+\end{frame}
+
+\begin{frame}{Método de Hartree-Fock}
+    Esto nos reduce el problema a un problema de un cuerpo efectivo, donde pasamos ahora a resolver la ecuacion de Fock:
+    \begin{equation}
+        \hat{F}\phi(\text{r}) = \epsilon\phi(\text{r})
+    \end{equation}
+    Donde $\epsilon$ es la energía del orbital $\phi$ y $\hat{F}$ es el operador de Fock, que se escribe como
+    \begin{equation}
+        \hat{F} = \frac{1}{2}\nabla^2 + \frac{Z}{\text{r}} + V_H(\text{r}) 
+    \end{equation}
+    Siendo $V_H$ el potencial de Hartree, que corresponde al potencial efectivo producido por la densidad de carga del otro electron.
+\end{frame}
+
+\begin{frame}{Método de Hartree-Fock}
+    El problema es que estas ecuaciones nuevas no son lineales: Dependemos de $\phi(\text{r}_2)$ para encontrar $\phi(\text{r}_1)$ y viceversa. Esta dependencia reside en el potencial de Hartree. \\\vspace{4mm}
+    Si interpretamos la densidad de carga (en unidades atomicas) del otro electron como 
+    \begin{equation}
+        \rho = |\phi(\text{r}_j)|^2
+    \end{equation}
+    Entonces, el potencial de Hartree queda descrito
+    \begin{equation}
+        V_H(\text{r}_i) = \int \frac{\phi^*(\text{r}_j)\phi(\text{r}_j)}{\text{r}_{ij}}d\text{r}_j
+    \end{equation}
+\end{frame}
+
+\begin{frame}{Método de Hartree-Fock}
+    Lo que hacemos para salir del dilema:
+    \begin{enumerate}[1.-]
+        \item Proponemos $\phi(\text{r}_j)$
+        \item Calculamos $V_H(\text{r}_i)$
+        \item Resolvemos la ecuacion de Fock y obtenemos $\phi(\text{r}_i)$
+        \item Calculamos $V_H(\text{r}_j)$
+        \item Resolvemos la ecuacion de Fock y obtenemos un nuevo $\phi(\text{r}_j)$
+        \item Repetimos desde el paso 2 hasta que $\phi(\text{r}_i)$ y $\phi(\text{r}_j)$ no cambien. \alert{Convergencia.}
+    \end{enumerate}
+    Esto es, en escencia, el metodo de Hartree-Fock.\\\vspace{4mm}
+\end{frame}
+
+\begin{frame}{Implementación del método}
+    Ahora nos quedan dos tareas: Como implementamos el calculo de $V_H$ y la ecuacion de Fock. \\\vspace{4mm}
+    Cálculo de $V_H$: Calcular integrales numéricamente es costoso, pero hay otra forma de hacerlo más simple: \alert{resolver la ecuación de Laplace.}\\
+    Por que? $\to$ Podemos usar FFTs (cuFFT)
+    \begin{equation}
+        \nabla^2 V_H = -4\pi\rho \xrightarrow{FFT} \frac{1}{k^2}V_H = -4\pi\rho
+    \end{equation}
+\end{frame}
+
+\begin{frame}{Implementación del método}
+    Ecuación de Fock: Normalmente resolver un problema de valores propios requiere diagonalizar matrices (complicado) $\to$ Otro efoque: Imaginary Time Propagation (ITP).\\\vspace{4mm}
+    La ec. de Schrödinger dependiente del tiempo
+    \begin{equation}
+        -i\hbar\pdv{\Psi}{t} = \hat{H}\Psi
+    \end{equation}
+    Sustituyendo $t = -i\tau$
+    \begin{equation}
+        \pdv{\Psi}{\tau} = -\hat{H}\Psi \implies \Psi(\tau) = e^{-\hat{H}\tau}\psi(0)
+    \end{equation}
+    Esta sustitución nos convierte la solucion ondulatoria a un decaimiento $\implies$ \alert{Convergencia al estado de menor energía}
+\end{frame}
+
+\begin{frame}{Implementación del método}
+    El problema: El potencial (depende de r) y la energía cinética (depende de p) no conmutan.\\\vspace{4mm}
+
+    La solución: Usar la aproximacion \alert{Split-Operator}
+    \begin{enumerate}[1.-]
+        \item Inicializamos una malla en 3D (con la función de prueba del HF)
+        \item Multiplicamos por $e^{-V(r)\Delta\tau/2}$ (Split-Step)
+        \item Multiplicamos por $e^{-k^2\Delta\tau/2}$ (aprovechamos FFT por la energía cinética)
+        \item Volvemos a multiplicar por $e^{-V(r)\Delta\tau/2}$
+    \end{enumerate}
+    Y con esto concluye el paso de resolver la ecuación de fock en el ciclo SCF.
+\end{frame}
+
+\end{document}

@@ -1,0 +1,165 @@
+
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+
+% Core packages
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[spanish]{babel}
+\usepackage{tikz-cd}
+\usepackage{physics,exercise,cancel}
+\usepackage{bm}
+\usepackage{dsfont}
+\usepackage{multicol}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathmorphing, patterns}
+
+% Paragraphs
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1\baselineskip}
+
+% Problems
+\theoremstyle{definition}
+\newtheorem*{problem}{Problema}
+
+% Equation numbering
+\numberwithin{equation}{section}
+
+\title{Ayudantía MMF II}
+\author{Jovanny Jara}
+\date{15 de mayo de 2026}
+
+\begin{document}
+\maketitle
+
+\section{Ecuación de Laplace en cartesianas: Demostración de los coeficientes $A_{nm}$}
+
+A partir de la solución general en coordenadas cartesianas (con las debidas condiciones de contorno),
+
+\begin{equation}
+    \psi(x,y,z) = \sum_{n,m=1}^{\infty} A_{n,m}\sin\pqty{\frac{n\pi x}{a}}\sin\pqty{\frac{m\pi y}{b}}
+    \exp\pqty{-\pi z\sqrt{\frac{n^2}{a^2} + \frac{m^2}{b^2}}},
+\end{equation}
+
+e imponiendo la condicion de contorno $\psi(x,y,0) = f(x,y)$, 
+
+\begin{equation}
+    \psi(x,y,0) = \sum_{n,m=1}^{\infty} A_{n,m}\sin\pqty{\frac{n\pi x}{a}}\sin\pqty{\frac{m\pi y}{b}} = f(x,y),
+\end{equation}
+
+con condición de ortogonalidad,
+\begin{equation}
+    \int_0^a \sin\pqty{\frac{m\pi x}{a}}\sin\pqty{\frac{n\pi x}{a}}\dd{x} = \frac{a}{2}\delta_{m,n},
+\end{equation}
+
+podemos obtener la siguiente expresión para los coeficientes $A_{n,m}$ 
+
+\begin{equation}
+    A_{n,m} = \frac{4}{ab}\int_{[0,a]\times[0,b]}\sin\pqty{\frac{n\pi x}{a}}\sin\pqty{\frac{m\pi y}{b}}f(x,y)\dd{x}\dd{y}.
+\end{equation}
+
+\begin{proof}
+    Multiplicamos (1.2) en ambos lados por $\sin\pqty{\flatfrac{n'\pi x}{a}}\sin\pqty{\flatfrac{m'\pi y}{b}}$,
+    \begin{equation}
+        \sin\pqty{\frac{n'\pi x}{a}}\sin\pqty{\frac{m'\pi y}{b}}f(x,y) = \sum_{n,m=1}^{\infty} A_{n,m}\sin\pqty{\frac{n\pi x}{a}}\sin\pqty{\frac{n'\pi x}{a}}\sin\pqty{\frac{m\pi y}{b}}\sin\pqty{\frac{m'\pi y}{b}}.
+    \end{equation}
+    Luego, integramos sobre el dominio, es decir, el rectángulo $[0,a]\times[0,b]$,
+    \begin{multline}
+        \int_{0}^{b}\int_{0}^{a}\dd{x}\dd{y}\sin\pqty{\frac{n'\pi x}{a}}\sin\pqty{\frac{m'\pi y}{b}}f(x,y) \\ =
+        \int_{0}^{b}\int_{0}^{a}\dd{x}\dd{y}\bqty{\sum_{n,m=1}^{\infty} A_{n,m}\sin\pqty{\frac{n\pi x}{a}}\sin\pqty{\frac{n'\pi x}{a}}\sin\pqty{\frac{m\pi y}{b}}\sin\pqty{\frac{m'\pi y}{b}}}.
+    \end{multline}
+    Nos centramos en el lado derecho. Suponiendo que la serie converge, podemos intercambiar el orden de la integral con la sumatoria, entonces
+    \begin{gather}
+        \sum_{n,m=1}^{\infty} A_{n,m}\underbrace{\bqty{\int_{0}^{a}\dd{x}\sin\pqty{\frac{n\pi x}{a}}\sin\pqty{\frac{n'\pi x}{a}}}}_{\frac{a}{2}\delta_{n,n'}}\underbrace{\bqty{\int_{0}^{b}\dd{y}\sin\pqty{\frac{m\pi y}{b}}\sin\pqty{\frac{m'\pi y}{b}}}}_{\frac{b}{2}\delta_{m,m'}}\\
+        = \sum_{n,m=1}^{\infty} A_{n,m} \frac{a}{2}\delta_{n,n'}\frac{b}{2}\delta_{m,m'} = A_{n,m}\frac{ab}{4}.\\
+        \implies \int_{0}^{b}\int_{0}^{a}\dd{x}\dd{y}\sin\pqty{\frac{n'\pi x}{a}}\sin\pqty{\frac{m'\pi y}{b}}f(x,y) = A_{n,m}\frac{ab}{4}.
+    \end{gather}
+    Finalmente, llegamos a que
+    \begin{equation}
+        \boxed{A_{n,m} = \frac{4}{ab}\int_{0}^{b}\int_{0}^{a}\dd{x}\dd{y}\sin\pqty{\frac{n'\pi x}{a}}\sin\pqty{\frac{m'\pi y}{b}}f(x,y)}
+    \end{equation}
+\end{proof}
+
+\section{Un problema en coordenadas esféricas (Problema 2, Tarea 5.)}
+
+\begin{problem}
+
+Mostrar que, cuando $\vb{r} \neq \vb{r'}$, la función $1/|\vb{r} - \vb{r'}|$ satisface la ecuación de Laplace. Encontrar el potencial el potencial electrostático dentro de una región esférica limitada por dos hemisferios (conductores) donde el potencial toma los valores $\pm V$ respectivamente.
+
+\end{problem}
+
+\begin{proof}
+    Sea 
+    \begin{equation}
+        f = \frac{1}{|\vb{r} - \vb{r'}|} = \frac{1}{\sqrt{r^2+r'^2-2rr'\cos\theta}}.
+    \end{equation}
+    Notemos que no hay dependencia en el ángulo azimutal, $\phi$. Entonces, el laplaciano en esféricas,
+    \begin{equation}
+        \laplacian f = \frac{1}{r^2}\pdv{r}\pqty{r^2\pdv{f}{r}} + \frac{1}{r^2\sin\theta}\pdv{\theta}\pqty{\sin\theta\pdv{f}{\theta}}.
+    \end{equation}
+    Calculamos las derivadas parciales,
+    \begin{align}
+        \pdv{f}{r} &= -(r-r'\cos\theta)f^{-3},\\
+        \pdv{r}\pqty{r^2\pdv{f}{r}} &= (-3r^2+2rr'\cos\theta)f^{-3} + 3r^2(r-r'\cos\theta)^2f^{-5},\\
+        \pdv{f}{\theta} &= -rr'\sin\theta f^{-3},\\ 
+        \pdv{\theta}\pqty{\sin\theta\pdv{f}{\theta}} &= -2rr'\sin\theta\cos\theta f^{-3} + 3r^2r'^2\sin^3\theta f^{-5}.
+    \end{align} 
+    Entonces, el laplaciano,
+    \begin{equation}
+        \begin{split}
+            \laplacian f &= -3f^{-3} + \cancel{2\frac{r'}{r}\cos\theta f^{-3}} + 3(r-r'\cos\theta)^2f^{-5} - \cancel{2\frac{r'}{r}\cos\theta f^{-3}} + 3r'^2\sin^2\theta f^{-5} \\
+            &= -3f^{-3} + 3(r^2 + r'^2\cos^2\theta -2rr'\cos\theta)f^{-5} + 3r'^2\sin^2\theta f^{-5}\\ 
+            &= -3f^{-3} + 3\underbrace{(r^2 + r'^2 -2rr'\cos\theta)}_{f^2}f^{-5}\\ 
+            &= -3f^{-3} + 3f^{-3} = 0
+        \end{split}
+    \end{equation}
+\end{proof}
+La región descrita tiene simetría azimutal, no depende de $\phi$. Por lo tanto, la solución general a la ec. de Laplace tiene la forma
+\begin{equation}
+    \Phi(r,\theta) = \sum_{l=0}^{\infty}\pqty{A_l r^l + B_l r^{-(l+1)}}P_l(\cos\theta).
+\end{equation}
+Aplicamos condiciones de contorno. Cuando $r=0$, $\Phi = 0$, lo que implica $B_l = 0$. Entonces,
+\begin{equation}
+    \Phi(r,\theta) = \sum_{l=0}^{\infty}A_l r^lP_l(\cos\theta).
+\end{equation}
+En el borde, cuando $r=a$, queremos $\Phi = f(\theta)$. La geometría del problema nos dice que en la superficie debe haber un potencial
+\begin{equation}
+    V_0(\theta) = \begin{cases}
+        +V & 0\leq \theta < \frac{\pi}{2} \qc \text{hemisferio superior} \\ 
+        -V & \frac{\pi}{2} < \theta \leq \pi \qc \text{hemisferio inferior}
+    \end{cases}
+\end{equation}
+Evaluamos en $r=a$ e igualamos a la expresión anterior,
+\begin{equation}
+    \Phi(r=a,\theta) = \sum_{l=0}^{\infty}A_l a^lP_l(\cos\theta) = V_0(\theta).
+\end{equation}
+Necesitamos encontrar los coeficientes, $A_l$. Hacemos uso de la ortogonalidad de los polinomios de Legendre,
+\begin{equation}
+    \int_{-1}^{1}P_l(x)P_m(x)\dd{x} = \frac{2}{2l+1}\delta_{lm},
+\end{equation}
+donde $x=\cos\theta$. Hacemos un proceso similar a la sección anterior; multiplicamos (2.11) a ambos lados por $P_m(x)$ e integramos desde -1 a 1,
+\begin{gather}
+    \sum_{l=0}^{\infty}A_l a^l\int_{-1}^{1}P_l(x)P_m(x)\dd{x} = \int_{-1}^{1} V_0(x)P_m(x)\dd{x}, \\
+    \sum_{l=0}^{\infty}A_l a^l\pqty{\frac{2}{2l+1}}\delta_{lm} = \int_{-1}^{1} V_0(x)P_m(x)\dd{x}, \\
+    A_l \frac{2a^l}{2l+1} = \int_{-1}^{1} V_0(x)P_l(x)\dd{x}.
+\end{gather}
+Donde $V_0(x)$ es una función por tramos considerando el cambio $x = \cos\theta \to dx = -sin\theta\dd{\theta}$, donde incluimos el signo de la diferencial en los límites de la función,
+\begin{equation}
+    V_0(x) = \begin{cases}
+        +V & 0\leq \theta < \frac{\pi}{2} \to 0 < x \leq 1\\ 
+        -V & \frac{\pi}{2} < \theta \leq \pi \to -1 \leq x < 0
+    \end{cases}
+\end{equation}
+Reordenando,
+\begin{equation}
+    A_l = \frac{2l+1}{2a^l}\int_{-1}^{1} V_0(x)P_l(x)\dd{x}.
+\end{equation}
+Centrémonos en la integral. Notemos que $V_0(x)$ es una función impar y que $P_l(x)$ es una función cuya paridad depende de la paridad de $l$. También, recordemos que el producto de funciones de igual paridad es par y el producto de funciones de paridad distinta es impar, i.e. $impar\times impar = par \qc impar \times par = impar$. Con esto, tenemos dos casos para la integral: para $l$ par y para $l$ impar. Por ultimo, recordemos que integrar una función impar en un intervalo simétrico da cero. Entonces, podemos solo quedarnos con el caso $l$ impar y podemos escribir la integral como dos veces la integral del intervalo 0 a 1, i.e.
+\begin{equation}
+    A_l = \frac{2l+1}{2a^l}\int_{-1}^{1} V_0(x)P_l(x)\dd{x}\implies A_{2l+1} = \frac{4l+3}{a^{2l+1}}\int_{0}^{1} V_0(x)P_{2l+1}(x)\dd{x}.
+\end{equation}
+Por último, como estamos en el intervalo 0 a 1, $V_0(x) = +V$. Así, podemos finalmente escribir la expresión completa para el potencial electrostático,
+\begin{equation}
+    \boxed{\Psi(r,\theta) = \sum_{l=0}^{\infty}V(4l+3)\pqty{\frac{r}{a}}^{2l+1}P_{2l+1}(\cos\theta)\int_{0}^{\frac{\pi}{2}}P_{2l+1}(\cos\theta')\sin\theta'\dd{\theta'}}
+\end{equation}
+Donde nos devolvimos a la variable $\theta$ y usamos $\theta'$ para enfatizar el hecho de que el polinomio de la integral es distinto.
+\end{document}

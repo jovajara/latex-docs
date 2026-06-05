@@ -1,0 +1,248 @@
+
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+
+% Core packages
+\usepackage{amsmath,amssymb}
+\usepackage[spanish]{babel}
+\usepackage{tikz-cd}
+\usepackage{physics}
+\usepackage{bm}
+\usepackage{dsfont}
+\usepackage{multicol}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathmorphing, patterns}
+
+% Paragraphs
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1\baselineskip}
+
+\title{Ayudantía MMF II}
+\author{Jovanny Jara}
+\date{10 de abril de 2026}
+
+\begin{document}
+\maketitle
+
+\section{Determinantes de orden $n$}
+
+Para encontrar el determinante de una matriz cuadrada $n\times n$ o de orden $n$, podemos usar la expansión por menores, o la regla de Laplace, para hacernos mas fácil el trabajo.
+
+Los menores, denotados por $M_{ij}$, son los determinantes correspondientes al elemento ($ij$) de la matriz original, denotado por $a_{ij}$, siendo estos obtenidos de eliminar la fila $i$ y la columna $j$ de la matriz original.
+
+Esta expansión puede ser hecha para cualquier fila o columna de la matriz original. Por ejemplo, para una expansion en la fila $i$ de una matriz $A$:
+
+\begin{equation}
+    D_n = \det(A) = \sum_{j=1}^n a_{ij}(-1)^{i+j}M_{ij}
+\end{equation}
+
+Donde $(-1)^{i+j}M_{ij}$ es el cofactor del elemento $a_{ij}$. Luego, para una expansión en la columna $j$, se cambia el indice de la suma por $i$. 
+
+La expansion se simplifica si hay ceros presentes en la columna o fila escogida, ya que no es necesario evaluar sus menores.
+
+\section{Un problema de autovalores}
+
+Sea una matriz $A$,
+
+\begin{equation}
+    A = \mqty(2 & 0 & 0 \\ 0 & 1 & 1 \\ 0 & 1 & 1)
+\end{equation}
+
+Buscamos resolver el problema
+
+\begin{equation}
+    (A - \lambda\mathds{1})\vec{v} = 0
+\end{equation}
+
+Como queremos soluciones no triviales, resolvemos la ecuación secular.
+
+\begin{equation}
+    \det(A - \lambda\mathds{1}) = \mdet{2-\lambda & 0 & 0 \\ 0 & 1-\lambda & 1 \\ 0 & 1 & 1-\lambda} = 0 
+\end{equation}
+
+Expandemos por menores en la primera fila,
+
+\begin{equation}
+    \mdet{2-\lambda & 0 & 0 \\ 0 & 1-\lambda & 1 \\ 0 & 1 & 1-\lambda} = -\lambda(2-\lambda)^2 = 0
+\end{equation}
+
+y llegamos a que $\lambda_1 = 0, \lambda_2 = 2, \lambda_3 = 2$. Notar que estamos en presencia de un sistema degenerado. Buscamos los autovectores, primero para $\lambda = 0$:
+
+\begin{equation}
+    A\vec{v}_1 = 0 \implies 2x = 0, y + z = 0, y + z = 0
+\end{equation}
+
+La solución al sistema es $x = 0$ y $z = -y$, por lo tanto el autovector es 
+
+\begin{equation}
+    \vec{v}_1 = \mqty(0 \\ 1 \\ -1)
+\end{equation}
+
+Ahora, para $\lambda = 2$:
+
+\begin{equation}
+    (A - 2\mathds{1})\vec{v} = 0 \implies 0 = 0, -y + z = 0, y - z = 0 
+\end{equation}
+
+Y la solución es $x = x$, $y = z$. Como necesitamos romper la degenerancia, podemos hacer uso de que $x$ es un grado de libertad del sistema y escribimos un vector genérico:
+
+\begin{equation}
+    \vec{v} = \mqty(x \\ y \\ y)
+\end{equation}
+
+Luego, este vector lo podemos reescribir de la siguiente manera:
+
+\begin{equation}
+    \vec{v} = x\mqty(1 \\ 0 \\ 0) + y\mqty(0 \\ 1 \\ 1)
+\end{equation}
+
+Y de aquí extraemos los dos vectores linealmente independientes que necesitamos.
+
+\begin{equation}
+    \vec{v}_2 = \mqty(1 \\ 0 \\ 0) \quad\land\quad \vec{v}_3 = \mqty(0 \\ 1 \\ 1)
+\end{equation}
+
+\section{Un problema del Boas - 3.12 P14}
+
+Tenemos el siguiente sistema físico: 
+
+\begin{figure}[h]
+    \centering
+    \resizebox{0.6\textwidth}{!}{
+    \begin{tikzpicture}[
+    % Definimos los estilos para las masas y los resortes
+    % scale=0.7, transform shape,
+    mass/.style={circle, draw, thick, shading=radial, inner color=white!90!gray, outer color=black!60, minimum size=0.8cm},
+    spring/.style={thick, decorate, decoration={coil, aspect=0.5, segment length=5pt, amplitude=4pt, pre length=0.6cm, post length=0.6cm}},
+]
+
+% ---- Muro Izquierdo ----
+\fill [pattern=north east lines] (-0.3,-1) rectangle (0,1);
+\draw[thick] (0,-1) -- (0,1);
+
+% ---- Masas ----
+% Masa 1
+\node[mass] (m1) at (3,0) {};
+\node[above=0.4cm] at (m1) {$m$};
+
+% Masa 2
+\node[mass] (m2) at (7,0) {};
+\node[above=0.4cm] at (m2) {$m$};
+
+% ---- Muro Derecho ----
+\fill [pattern=north east lines] (10,-1) rectangle (10.3,1);
+\draw[thick] (10,-1) -- (10,1);
+
+% ---- Resortes ----
+% Resorte 1 (Muro a Masa 1)
+\draw[spring] (0,0) -- node[above=0.4cm] {$k$} (m1.west);
+
+% Resorte 2 (Masa 1 a Masa 2)
+\draw[spring] (m1.east) -- node[above=0.4cm] {$2k$} (m2.west);
+
+% Resorte 3 (Masa 2 a Muro)
+\draw[spring] (m2.east) -- node[above=0.4cm] {$k$} (10,0);
+
+% ---- Indicadores de desplazamiento (x1 y x2) ----
+% Desplazamiento x1
+\draw[thick, dashed] (m1.south) -- +(0,-0.8);
+\draw[thick, -latex] (3,-0.6) -- (3.8,-0.6) node[right] {$x_1$};
+
+% Desplazamiento x2
+\draw[thick, dashed] (m2.south) -- +(0,-0.8);
+\draw[thick, -latex] (7,-0.6) -- (7.8,-0.6) node[right] {$x_2$};
+
+\end{tikzpicture}}
+
+\caption{Sistema de dos masas iguales acopladas a tres resortes.}
+\end{figure}
+
+Queremos obtener las frecuencias y los modos normales del sistema. La ley de Hooke nos dice que el potencial está dado por:
+
+\begin{equation}
+    V = \frac{1}{2}kx^2
+\end{equation}
+
+Luego, dada la configuración del sistema, escribimos la expresión para el potencial como:
+
+\begin{equation}
+    V = \frac{1}{2}\pqty{kx_1^2 + 2k(x_2-x_1)^2 + kx_2^2}
+\end{equation}
+
+Si escribimos las ecuaciones de movimiento para cada masa sabiendo que, por la segunda ley de Newton,
+
+\begin{equation}
+    m\ddot{x}_i = -\pdv{V}{x_i} \qc i = 1,2,...
+\end{equation}
+
+Tenemos que, para $x_1$,
+
+\begin{equation}
+    \begin{aligned}
+    m\ddot{x}_1 &= -\pdv{V}{x_1} = -kx_1 + 2k(x_2 - x_1)\\
+    \ddot{x}_1 &= \omega_0^2(-3x_1 + 2x_2) \qc \omega_0^2 = \frac{k}{m}
+    \end{aligned}
+\end{equation}
+
+y para $x_2$:
+
+\begin{equation}
+    \begin{aligned}
+    m\ddot{x}_2 &= -kx_2 - 2k(x_2 - x_1)\\
+    \ddot{x}_2 &= \omega_0^2(2x_1 - 3x_2)
+    \end{aligned}
+\end{equation}
+
+Proponemos el siguiente ansatz:
+
+\begin{equation}
+    x_i(t) = x_0\sin(\omega t)\qc i=1,2,...
+\end{equation}
+
+La ecuación diferencial que nos da esta solución es:
+
+\begin{equation}
+    \ddot{x}_i = -\omega^2x_i
+\end{equation}
+
+Reemplazando lo anterior en nuestras ecuaciones de movimiento nos da el siguiente sistema de ecuaciones:
+
+\begin{equation}
+    \begin{cases}
+        -\omega^2x_1 = \omega_0^2(-3x_1 + 2x_2) \\
+        -\omega^2x_2 = \omega_0^2(2x_1 - 3x_2)
+    \end{cases}
+\end{equation}
+
+En forma matricial, este sistema se escribe como:
+
+\begin{equation}
+    \lambda\mqty(x_1 \\ x_2) = \mqty(3 & -2 \\ -2 & 3) \mqty(x_1 \\ x_2) \qc \lambda=\frac{\omega^2}{\omega_0^2}
+\end{equation}
+
+Tenemos un problema de autovalores, por lo que realizamos el procedimiento usual:
+
+\begin{equation}
+    \mdet{3-\lambda & -2 \\ -2 & 3-\lambda} = (3-\lambda)^2 - 4 = 0
+\end{equation}
+
+Resolviendo para $\lambda$ llegamos a que $\lambda_1 = 5$ y $\lambda_2 = 1$. Luego, por la definición de $\lambda$, vemos que las frecuencias características son
+
+\begin{equation}
+    \omega_1 = \sqrt{\frac{5k}{m}} \quad\land\quad \omega_2 = \sqrt{\frac{k}{m}}
+\end{equation}
+
+Por último, los modos de vibración los encontramos reemplazando los autovalores. Para $\lambda = 5$, tenemos 
+
+\begin{equation}
+    -2x_1 - 2x_2 = 0, -2x_1 + -2x_2 = 0
+\end{equation}
+
+con solución $x_2 = -x_1$. Esto nos dice que, cuando $\omega = \omega_1$, las masas se mueven en direcciones opuestas. Luego, para $\lambda = 1$,
+
+\begin{equation}
+    2x_1 - 2x_2 = 0, -2x_1 + 2x_2 = 0
+\end{equation}
+
+y la solución es $x_1 = x_2$. Tenemos movimiento en conjunto de las masas cuando $\omega = \omega_2$
+\end{document}

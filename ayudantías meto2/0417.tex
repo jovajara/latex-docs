@@ -1,0 +1,167 @@
+
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+
+% Core packages
+\usepackage{amsmath,amssymb}
+\usepackage[spanish]{babel}
+\usepackage{tikz-cd}
+\usepackage{physics}
+\usepackage{bm}
+\usepackage{dsfont}
+\usepackage{multicol}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathmorphing, patterns}
+
+% Paragraphs
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1\baselineskip}
+
+\title{Ayudantía MMF II}
+\author{Jovanny Jara}
+\date{17 de abril de 2026}
+
+\begin{document}
+\maketitle
+
+\section{Series de Fourier para funciones con discontinuidad (y reales)}
+
+Sea la función $f(\theta) = e^\theta$ donde $\theta \in [\pi, \pi)$. Obtener su serie de Fourier y demostrar que:
+
+\begin{equation*}
+    \sum_{\mathit{n}=1}^{\infty} \frac{1}{1+\mathit{n}^2} = \frac{1}{2} (\pi\coth(\pi)-1).
+\end{equation*}
+
+Para encontrar la expansión de la función dada, nos fijamos primero en la forma de esta. Notemos que es una función real, es decir, $f^*(\theta) = f(\theta)$. Por lo tanto, podemos escribir la expansión en la forma:
+
+\begin{equation}
+    f(\theta) = \hat{f_0} + \sum_{n\geq1} (a_n\cos{n\theta} + b_n\sin{n\theta}),
+\end{equation}
+
+donde tenemos que
+
+\begin{equation}
+    a_n = \frac{1}{\pi}\int_{-\pi}^\pi \cos(n\theta) f(\theta) \dd{\theta}\qc b_n = \frac{1}{\pi}\int_{-\pi}^\pi \sin(n\theta) f(\theta) \dd{\theta}.
+\end{equation}
+
+Por lo tanto, solo nos interesa encontrar $\hat{f_0}, a_n$ y $b_n$. Empezamos entonces con $\hat{f_0}$:
+
+\begin{equation}
+    \hat{f_0} = \frac{1}{2\pi}\int_{-\pi}^\pi e^\theta \mathrm{d}\theta = \frac{e^\pi - e^{-\pi}}{2\pi} = \frac{\sinh(\pi)}{\pi}.
+\end{equation}
+
+Ahora, $a_n$:
+
+\begin{equation}
+    a_n = \frac{1}{\pi}\int_{-\pi}^\pi \cos(n\theta) e^\theta \mathrm{d}\theta.
+\end{equation}
+
+Tenemos una integral por partes. Tomamos $u=\cos(n\theta)$ y $dv=e^\theta$ y llegamos a que:
+
+\begin{equation}
+    a_n = \frac{2(-1)^n\sinh(\pi)}{\pi(1 + n^2)}.
+\end{equation}
+
+Luego, $b_n$:
+
+\begin{equation}
+    b_n = \frac{1}{\pi}\int_{-\pi}^\pi \in(n\theta) e^\theta \mathrm{d}\theta.
+\end{equation}
+
+Otra integral por partes. Tomamos $u=\in(n\theta)$ y $dv=e^\theta$ y entonces:
+
+\begin{equation}
+    b_n = -\frac{2n(-1)^n\sinh(\pi)}{\pi(1 + n^2)}.
+\end{equation}
+
+Así, la serie de Fourier queda:
+
+\begin{equation}
+    f(\theta) = \frac{\sinh(\pi)}{\pi} \pqty{1 + \sum_{n=1}^{\infty} \frac{2(-1)^n}{1 + n^2} [\cos(n\theta) - n\sin(n\theta)]}.
+\end{equation}
+
+Ahora, para poder demostrar la identidad, explotamos la discontinuidad de la función en $\theta = \pi$. Recordemos que, para una función con discontinuidad en $\theta = \pi$, las sumas parciales de Fourier:
+
+\begin{equation}
+    S_nf(\pi) \to \frac{f(\pi^+) + f(\pi^-)}{2}
+\end{equation}
+
+Veamos, entonces, $f(\pi^-)$:
+
+\begin{equation}
+    f(\pi^-) = \lim_{\theta\to\pi^-} f(\theta) = \lim_{\theta\to\pi^-} e^\theta = e^\pi.
+\end{equation}
+
+Ahora, con $f(\pi^+)$ debemos tener cuidado. Como nos acercamos a $\pi$ por la derecha, estamos recorriendo valores que no están en el dominio de $\theta$, por lo tanto, hacemos $\theta = \theta - 2\pi$ y entonces:
+
+\begin{equation}
+   f(\pi^+) = \lim_{\theta\to\pi^+} f(\theta - 2\pi) = \lim_{\theta\to\pi^+} e^{\theta - 2\pi} = e^{-\pi}.
+\end{equation}
+
+Entonces, tenemos que las sumas parciales
+
+\begin{equation}
+    S_nf(\pi) \to \frac{e^{-\pi} + e^\pi}{2} = \cosh(\pi).
+\end{equation}
+
+Ahora, si evaluamos la serie de fourier que encontramos antes en la discontinuidad, tenemos que:
+
+\begin{gather}
+    f(\pi) = \frac{\sinh(\pi)}{\pi} \pqty{1 + \sum_{n=1}^{\infty} \frac{2(-1)^n}{1 + n^2} [\cos(n\pi) - n\sin(n\pi)]} = \cosh(\pi)\\
+    \pi\cosh(\pi) - 1 = \sum_{n=1}^{\infty} \frac{2(-1)^{2n}}{1 + n^2}
+\end{gather}
+
+Y llegamos a que:
+
+\begin{equation}
+    \frac{1}{2} (\pi\coth(\pi)-1) = \sum_{n=1}^{\infty} \frac{1}{1+n^2}
+\end{equation}
+
+\section{Algo de Sturm-Liuville}
+Buscamos expresar las siguientes ecuaciones en su forma Sturm-Liuville:
+
+\begin{enumerate}
+    \item $(1 - x^2)y'' - 2xy' + n(n + 1)y = 0$  
+    \item $xy'' + (b - x)y' - ay = 0$ donde $a, b, n$ son constantes.  
+\end{enumerate}
+
+La forma más general de escribir una ecuación en su forma Sturm-Liuville, es usando la ecuación de autofunciones del operador diferencial $\mathcal{L}$:
+
+\begin{equation}
+    \mathcal{L}y(x) = \dv{x}\bqty{p(x)\dv{y}{x}} + q(x)y = -\lambda w(x)y(x).
+\end{equation}
+
+Pasemos entonces a la primera ecuación. Si tomamos el término que acompaña a $y''$ y calculamos su derivada, tenemos el término que está acompañando a $y'$, es decir, si tomamos $p(x) = (1 - x^2)$ vemos que:
+
+\begin{equation}
+    \dv{x}\bqty{(1 - x^2)\dv{y}{x}} = (1 - x^2)y'' - 2xy'.
+\end{equation}
+
+Por último, como el término que acompaña a $y$ no depende de $x$, lo podemos asociar con $\lambda$, lo que implica $q(x) = 0$ y $w(x) = 1$. Entonces, podemos concluir que la primera ecuación \textit{ya está} en forma S-L, con $p(x) = (1 - x^2),\, q(x) = 0,\, w(x) = 1$ y $\lambda = n(n + 1)$.
+
+Si hacemos el mismo procedimiento para la segunda ecuación podemos notar que el termino que acompaña a $y'$ \textit{no es} la derivada del término que acompaña a $y''$. Entonces, nos vemos en necesidad de buscar un \textbf{factor integrante}. Para eso, reescribimos la ecuación como:
+
+\begin{equation}
+    y'' + \pqty{\frac{b-x}{x}}y' - \pqty{\frac{a}{x}}y = 0.
+\end{equation}
+
+Si recordamos, en la expresión de $\mathcal{L}$, $p(x)$ era un factor integrante, definido como
+
+\begin{equation}
+    p(x) = \exp\pqty{\int_0^x \frac{R(t)}{P(t)}\dd{t}}.
+\end{equation}
+
+Aquí, $\flatfrac{R(t)}{P(t)}$ es el término que acompaña a $y'$ (podemos hacer esto ya que reescribimos la ecuación de modo que $y''$ quede sólo), entonces,
+
+\begin{equation}
+    p(x) = \exp\pqty{\int_0^x \frac{b-t}{t}\dd{t}} = \exp(b\ln x-x) = x^be^{-x}.
+\end{equation}
+
+Ahora, multiplicamos la ecuación por $p(x)$ y nos queda que:
+
+\begin{equation}
+    x^be^{-x}y'' + e^{-x}(bx^{b-1}-x^{b})y' - ax^{b-1}e^{-x}y = 0.
+\end{equation}
+
+Ahora si tenemos la ecuación expresada en su forma S-L y podemos ver que $q(x) = ax^{b-1}e^{-x}$ y que $w(x) = 0$.
+\end{document}
