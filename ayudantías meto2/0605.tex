@@ -54,7 +54,11 @@ Sea un cascarón esférico de radio $R$ con una densidad de carga superficial $\
   \begin{equation}
     \sum_{l=0}^{\infty}A_l R^l P_l(\cos\theta) = \sum_{l=0}^{\infty}B_l R^{-(l+1)} P_l(\cos\theta).
   \end{equation}
-  Aquí, podemos multiplicar ambos lados por $P_{l'}(\cos\theta)\sin\theta$ y luego integrar sobre $\theta$ desde $0$ hasta $\pi$. Utilizando la ortogonalidad de los polinomios de Legendre, obtenemos,
+  Multiplicamos ambos lados por $P_{l'}(\cos\theta)\sin\theta$ e integramos en $\theta$ desde $0$ hasta $\pi$.
+  \begin{equation}
+    \int_0^{\pi}\sum_{l=0}^{\infty}A_l R^l P_l(\cos\theta)P_{l'}(\cos\theta)\sin\theta \dd{\theta} = \int_0^{\pi}\sum_{l=0}^{\infty}B_l R^{-(l+1)} P_l(\cos\theta)P_{l'}(\cos\theta)\sin\theta \dd{\theta}.
+  \end{equation}
+  Utilizando la ortogonalidad de los polinomios de Legendre, obtenemos,
   \begin{equation}
     \boxed{B_l = A_l R^{2l+1}}.
   \end{equation}
@@ -66,7 +70,7 @@ Sea un cascarón esférico de radio $R$ con una densidad de carga superficial $\
   \begin{equation}
     -\sum_{l=0}^{\infty}(l+1)B_l R^{-(l+2)} P_l(\cos\theta) - \sum_{l=0}^{\infty}l A_l R^{l-1} P_l(\cos\theta) = -\frac{\sigma_0(\theta)}{\epsilon_0}.
   \end{equation}
-  Usando la ecuación (1.5), podemos escribir,
+  Usando la ecuación (1.6), podemos escribir,
   \begin{equation}
     \sum_{l=0}^{\infty}(2l+1)A_l R^{l-1} P_l(\cos\theta) = \frac{\sigma_0(\theta)}{\epsilon_0}.
   \end{equation}
@@ -74,7 +78,62 @@ Sea un cascarón esférico de radio $R$ con una densidad de carga superficial $\
   \begin{equation}
     \boxed{A_l = \frac{1}{2\epsilon_0 R^{l-1}}\int_0^{\pi}\sigma_0(\theta)P_l(\cos\theta)\sin\theta \dd{\theta}}.
   \end{equation}
-  Entonces, las ecuaciones (1.2) y (1.3) junto con los coeficientes dados por las ecuaciones (1.5) y (1.9) nos dan la solución completa al problema.
+  Así, las ecuaciones (1.2) y (1.3) junto con los coeficientes dados por las ecuaciones (1.6) y (1.10) nos dan la solución completa al problema.
+\end{proof}
+
+\section{Ecuación de onda en 1+1 dimensiones: Uno cortito del Arfken}
+
+\begin{Exercise*}[title={Ejercicio 9.6.1}, name={}, origin={Arfken, Weber, Harris, Mathematical Methods for Physicists}]
+
+  Resolver la ecuación de onda unidimensional (estacionaria) y obtener $\phi(x,t)$, si en $t=0$ se tiene que $\phi(x,0) = \sin(x)$ y $\pdv*{\phi(x,0)}{t}= \cos(x)$.
+
+\end{Exercise*}
+
+\begin{proof}[Solución]\renewcommand{\qedsymbol}{}
+  La ecuación a resolver es,
+  \begin{equation}
+    \pdv[2]{\phi}{t} = c^2 \pdv[2]{\phi}{x}.
+  \end{equation}
+  Sabemos que la solución general a esta ecuación es
+  \begin{equation}
+    \phi(x,t) = \sum_{n=1}^{\infty}\left[A_n \cos\left(\frac{n\pi c t}{L}\right) + B_n \sin\left(\frac{n\pi c t}{L}\right)\right]\sin\left(\frac{n\pi x}{L}\right),
+  \end{equation}
+  con 
+  \begin{equation}
+    A_n = \frac{2}{L}\int_0^L \phi_0(x)\sin\left(\frac{n\pi x}{L}\right) \dd{x} \qc B_n = \frac{2}{n\pi c}\int_0^L \pdv*{\phi(x)}{t}\sin\left(\frac{n\pi x}{L}\right) \dd{x},
+  \end{equation}
+  donde 
+  \begin{equation}
+    \phi(x,0) = f(x) \qc \pdv*{\phi(x,0)}{t} = g(x).
+  \end{equation}
+  En nuestro caso, $f(x) = \sin(x)$ y $g(x) = \cos(x)$. Entonces, calculamos los coeficientes. Para $A_n$, tenemos,
+  \begin{equation}
+    A_n = \frac{2}{L}\int_0^L \sin(x)\sin\left(\frac{n\pi x}{L}\right) \dd{x}.
+  \end{equation}
+  Escribimos $k = \frac{n\pi}{L}$ y resolvemos la integral por partes, con $u = \sin(kx)$ y $dv = \sin(x) \dd{x}$, llegando a
+  \begin{equation}
+    \int_0^L \sin(x)\sin\left(\frac{n\pi x}{L}\right) \dd{x} = k\int_{0}^{L} \cos(x)\cos(kx) \dd{x},
+  \end{equation}
+  volvemos a integrar por partes, tomando $u = \cos(kx)$ y $dv = \cos(x) \dd{x}$, y finalmente obtenemos,
+  \begin{equation}
+    A_n = \boxed{\frac{2n\pi(-1)^n\sin(L)}{L^2 - n^2\pi^2}}.
+  \end{equation}
+  Luego, para $B_n$,
+  \begin{equation}
+    B_n = \frac{2}{n\pi c}\int_0^L \cos(x)\sin\left(\frac{n\pi x}{L}\right) \dd{x}.
+  \end{equation}
+  Nuevamente, escribimos $k = \frac{n\pi}{L}$ y resolvemos la integral por partes, con $u = \sin(kx)$ y $dv = \cos(x) \dd{x}$, llegando a
+  \begin{equation}
+    \int_0^L \cos(x)\sin\left(\frac{n\pi x}{L}\right) \dd{x} = -k\int_{0}^{L} \sin(x)\cos(kx) \dd{x},
+  \end{equation}
+  volvemos a integrar por partes con $u = \cos(kx)$ y $dv = \sin(x) \dd{x}$ y finalmente obtenemos,
+  \begin{equation}
+    B_n = \boxed{\frac{2L[(-1)^n\cos(L) - 1]}{c(L^2 - n^2\pi^2)}}.
+  \end{equation}
+  Con esto, entonces, la solucion completa al problema es
+  \begin{equation}
+    \phi(x,t) = \sum_{n=1}^{\infty}\sin(\frac{n\pi x}{L})\left[\frac{2n\pi(-1)^n\sin(L)}{L^2 - n^2\pi^2} \cos\left(\frac{n\pi c t}{L}\right) + \frac{2L[(-1)^n\cos(L) - 1]}{c(L^2 - n^2\pi^2)} \sin\left(\frac{n\pi c t}{L}\right)\right].
+  \end{equation}
 \end{proof}
 
 \end{document}
