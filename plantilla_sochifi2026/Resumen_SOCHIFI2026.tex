@@ -1,0 +1,179 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% XXV Simposio Chileno de Física, LaTeX Template, Versión 1 (8 may 2026)
+% vmunoz@fisica.ciencias.uchile.cl
+% Basado en versión previa de 
+% fabian.torres@ufrontera.cl    (7 Junio 2024)
+% daniel.salinas@sansano.usm.cl (12 Septiembre 2022)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Método de compilación:  
+%				
+%				LaTeX->PDF
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%                                                    INSTRUCCIONES SOBRE EL DOCUMENTO
+%
+% - Subrayar al expositor del trabajo,
+% -	Borrar el texto en rojo y este comentario
+% -	No se debe modificar los tamaños de letra.
+% -	El título del trabajo no debe superar 2 líneas, o 30 palabras o 140 caracteres incluyendo espacios.
+% -	Preferentemente, incluya sólo el correo electrónico del expositor del trabajo.
+% -	Incluya un máximo de 5 autores. En caso de tener más de 5 autores, seleccione los principales incluyendo al expositor, y agregue et al %   al listado para incluir al resto.
+%
+%-----------------------------------------
+
+%----------------------------------------------------------------------------------------
+%	CONFIGURACIÓN DEL DOCUMENTO
+%----------------------------------------------------------------------------------------
+
+\documentclass[11pt,spanish]{article}
+
+\usepackage[spanish]{babel}
+\usepackage{epsfig,graphicx}
+\usepackage{amsmath, amsthm, amsfonts}
+\usepackage[hmarginratio=6:5,top=32mm,columnsep=11mm,textwidth=178mm]{geometry}
+\usepackage[makeroom]{cancel} %FT - para incluir simplificaciones en ecuaciones
+\usepackage{multicol} %FT - para generar varias columnas en una seccion del documento
+\usepackage[hang,small,labelfont=bf,up,textfont=it,up]{caption} % Custom captions under/above floats in tables or figures
+\usepackage{booktabs} % Horizontal rules in tables
+\usepackage{float} % Required for tables and figures in the multi-column environment - they need to be placed in specific locations with the [H] (e.g. \begin{table}[H])
+\usepackage{hyperref} % For hyperlinks in the PDF
+\usepackage{paralist} % Used for the compact item environment which makes bullet points with less space between them
+
+\addcontentsline{toc}{section}{Title of the section}
+\usepackage{titlesec} % Allows customization of titles
+\usepackage{fancyhdr} % Headers and footers
+
+
+\pagestyle{fancy} % All pages have headers and footers
+\fancyhead{} % Blank out the default header
+\fancyfoot{} % Blank out the default footer
+\renewcommand{\headrulewidth}{3pt}
+\renewcommand{\footrulewidth}{0pt}
+%-----------------------------------------------------------------------------------------
+% AGREGUE AQUÍ UNA DE LAS ÁREAS DEFINIDAS EN LA PÁGINA WEB DEL SIMPOSIO www.sochifi2014.udec.cl
+%-----------------------------------------------------------------------------------------
+
+
+\fancyhead[L]{\small 	Escriba su área de trabajo \\ (no incluya la sigla)} % Custom header text
+\fancyhead[R]{{\bf XXV Simposio Chileno de F\'isica} \\  23 al 26 de
+  noviembre de 2026 \\  Santiago, Chile} % Custom header text
+\fancyfoot[RO,L]{\thepage} % Custom footer text
+
+\linespread{1} %
+
+%----------------------------------------------------------------------------------------
+%	TÍTULO Y AUTORES. SUBRAYAR AL EXPOSITOR
+%----------------------------------------------------------------------------------------
+
+\title{\vspace{-5mm}\fontsize{16pt}{10pt}\selectfont \textbf{Efecto Sommerfield en modelos de materia oscura con multipletes de SU(2)_L}} % Article title
+\vspace{-3mm}
+\author{
+\normalsize Marcela González$^{1*}$, \underline{Jovanny Jara}$^{2 \dagger}$
+ \\ \vspace{-1mm}
+\small  $^1$Afiliación A, CiudadXX. \\ %Institución 1
+\small       $^2$Afiliación B, CiudadYY.         \\ %Institución 2
+\small $*$marcela.gonzalezpi@uv.cl, $\dagger$jovanny.jara@estudiantes.uv.cl}
+\date{}
+\pagestyle{empty}
+%----------------------------------------------------------------------------------------
+
+\newcommand{\seccion}[1]{\noindent {\Large\textbf{#1}}\\}
+	
+\begin{document}
+\maketitle
+\thispagestyle{fancy} % All pages have headers and footers
+\pagenumbering{gobble}
+%----------------------------------------------------------------------------------------
+%	CONTENIDO
+%----------------------------------------------------------------------------------------
+
+\seccion{Resumen}
+\noindent 
+La naturaleza de la materia oscura (DM) es uno de los problemas centrales de la cosmología y la física de partículas. Diversas observaciones astronómicas y cosmológicas sugieren que la mayor parte de la materia en el universo corresponde a DM, pero su composición y propiedades siguen siendo desconocidas.
+
+% En esta sección obligatoria, escriba un resumen e introducción del trabajo que presenta al Simposio.
+% El texto de la contribución puede estar en castellano o en inglés.
+% No se extienda más allá de una página tamaño carta y no modifique
+% el tipo de letra. Subraye el nombre del autor que presenta el trabajo
+% (sea oral o poster), tal como se indica más arriba, e incluya su
+% correo electrónico después de las afiliaciones. Incluya un máximo
+% de 5 autores. En caso de tener más de 5 autores, seleccione los
+% principales incluyendo al expositor, y agregue et al para incluir al
+% resto. Use como índices los símbolos $*$, $\dag$, $\ddag$, o $**$.
+% Puede dividir o no el texto en secciones, aparte de esta primera
+% sección que es obligatoria. Introduzca las referencias manualmente y
+% use números entre corchetes $[1]$. Dos referencias juntas escríbalas
+% $[1, 2]$. Agregue la lista de referencias al final, usando el mismo
+% formato de las secciones. Envíe su contribución mediante el
+% formulario dispuesto en la página web del encuentro. Para consultas
+% escriba al Comité Organizador, al correo: {\tt organizacion@sochifi2026.cl}.\\
+
+
+%Incluya ecuaciones, tablas y figuras si es necesario.
+
+
+\seccion{Desarrollo}
+\noindent
+Incluya ecuaciones, tablas y figuras si es necesario.
+\begin{align}
+|\alpha\rangle &=e^{-|\alpha|^2 / 2} \sum_{n=0}^{\infty}
+\frac{\alpha^n}{\sqrt{n !}}|n\rangle \ , \\
+\gamma &= \frac{1}{\sqrt{1-\frac{v^{2}}{c^{2}}}} \ .
+\end{align}
+
+Las tablas pueden construirse en el archivo directamente o insertarse como cuadro de texto o imagen. Las figuras, por su parte, deben insertarse como imagen. También puede usar dos columnas si lo necesita.
+
+\begin{multicols}{2}
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+Nombre  & Apellido & Nota   \\ \hline
+Diego   & Kosta    & $6.0$  \\ \hline
+Antonio & Grassman & $5.5 $ \\ \hline
+\end{tabular}\\
+\vspace{0.3cm}
+Tabla I. Ejemplo
+\end{table}
+
+\columnbreak                                                    
+\begin{figure}[H]
+\centerline{\includegraphics[width=3cm]{sochifilogo.png}}
+\end{figure}
+\end{multicols}
+
+
+%------------------------------------------------
+
+\noindent \textbf{Agradecimientos:} Incluya los agradecimientos antes de las referencias.\\
+
+
+%------------------------------------------------
+
+% Escriba aqu\'i s\'olo las referencias m\'as importantes del trabajo
+
+
+
+\noindent {\large\textbf{Referencias}}
+
+
+\noindent
+[1] O. Smith, S. Autor y S. Klein, Phys. Rev. H 60, 028793 (2009). \newline
+[2] P. Autor y T. Autor, Phyz. Rev. Lett. 118, 190603 (2017).
+
+
+
+
+
+
+
+
+
+
+
+%----------------------------------------------------------------------------------------
+
+
+
+\end{document}

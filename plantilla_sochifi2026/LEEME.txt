@@ -1,0 +1,13 @@
+Plantilla LaTeX — XXV Simposio Chileno de Física (SOCHIFI 2026)
+23-26 de noviembre de 2026 · Facultad de Ciencias, Universidad de Chile
+
+Archivos incluidos:
+  Resumen_SOCHIFI2026.tex  — Plantilla LaTeX editable
+  Resumen_SOCHIFI2026.pdf  — Ejemplo compilado
+
+Instrucciones:
+  1. Edita Resumen_SOCHIFI2026.tex con el contenido de tu resumen.
+  2. Compila con: pdflatex Resumen_SOCHIFI2026.tex
+  3. Sube el PDF generado en https://sochifi2026.cl/enviar-resumen
+
+Consultas: organizacion@sochifi2026.cl
