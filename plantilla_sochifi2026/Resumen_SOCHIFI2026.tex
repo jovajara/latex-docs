@@ -1,12 +1,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % XXV Simposio Chileno de Física, LaTeX Template, Versión 1 (8 may 2026)
 % vmunoz@fisica.ciencias.uchile.cl
-% Basado en versión previa de 
+% Basado en versión previa de
 % fabian.torres@ufrontera.cl    (7 Junio 2024)
 % daniel.salinas@sansano.usm.cl (12 Septiembre 2022)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Método de compilación:  
-%				
+% Método de compilación:
+%
 %				LaTeX->PDF
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -55,7 +55,7 @@
 %-----------------------------------------------------------------------------------------
 
 
-\fancyhead[L]{\small 	Escriba su área de trabajo \\ (no incluya la sigla)} % Custom header text
+\fancyhead[L]{\small 	Física mas allá \\ del Modelo Estándar} % Custom header text
 \fancyhead[R]{{\bf XXV Simposio Chileno de F\'isica} \\  23 al 26 de
   noviembre de 2026 \\  Santiago, Chile} % Custom header text
 \fancyfoot[RO,L]{\thepage} % Custom footer text
@@ -69,17 +69,16 @@
 \title{\vspace{-5mm}\fontsize{16pt}{10pt}\selectfont \textbf{Efecto Sommerfield en modelos de materia oscura con multipletes de SU(2)_L}} % Article title
 \vspace{-3mm}
 \author{
-\normalsize Marcela González$^{1*}$, \underline{Jovanny Jara}$^{2 \dagger}$
+\normalsize Marcela González$^{1*}$, \underline{Jovanny Jara}$^{1 \dagger}$
  \\ \vspace{-1mm}
-\small  $^1$Afiliación A, CiudadXX. \\ %Institución 1
-\small       $^2$Afiliación B, CiudadYY.         \\ %Institución 2
+\small  $^1$Instituto de Física y Astronomía, Universidad de Valparaíso, Valparaíso \\ %Institución 1
 \small $*$marcela.gonzalezpi@uv.cl, $\dagger$jovanny.jara@estudiantes.uv.cl}
-\date{}
+\date{\today}
 \pagestyle{empty}
 %----------------------------------------------------------------------------------------
 
 \newcommand{\seccion}[1]{\noindent {\Large\textbf{#1}}\\}
-	
+
 \begin{document}
 \maketitle
 \thispagestyle{fancy} % All pages have headers and footers
@@ -89,9 +88,9 @@
 %----------------------------------------------------------------------------------------
 
 \seccion{Resumen}
-\noindent 
-La naturaleza de la materia oscura (DM) es uno de los problemas centrales de la cosmología y la física de partículas. Diversas observaciones astronómicas y cosmológicas sugieren que la mayor parte de la materia en el universo corresponde a DM, pero su composición y propiedades siguen siendo desconocidas.
-
+\noindent
+La naturaleza de la materia oscura (DM) es uno de los problemas centrales de la cosmología y la física de partículas. Diversas observaciones astronómicas y cosmológicas sugieren que la mayor parte de la materia en el universo corresponde a DM, pero su composición y propiedades siguen siendo desconocidas.\\
+Una posibilidad es que la DM corresponda a una partícula masiva estable introducida en modelos de nueva física más allá del Modelo Estándar (SM), cuya densidad reliquia se determina con la sección eficaz de aniquilación. Al considerar modelos donde las partículas de DM corresponden a multipletes no triviales del grupo de gauge electrodébil $SU(2)_L$ entre las cuales existe una interacción a largo alcance, la sección eficaz de aniquilación puede verse significativamente aumentada en el límite no relativista, fenómeno que se conoce como Sommerfield Enhancement, relevante para la fenomenología de DM.\\
 % En esta sección obligatoria, escriba un resumen e introducción del trabajo que presenta al Simposio.
 % El texto de la contribución puede estar en castellano o en inglés.
 % No se extienda más allá de una página tamaño carta y no modifique
@@ -115,38 +114,40 @@ La naturaleza de la materia oscura (DM) es uno de los problemas centrales de la 
 
 \seccion{Desarrollo}
 \noindent
-Incluya ecuaciones, tablas y figuras si es necesario.
-\begin{align}
-|\alpha\rangle &=e^{-|\alpha|^2 / 2} \sum_{n=0}^{\infty}
-\frac{\alpha^n}{\sqrt{n !}}|n\rangle \ , \\
-\gamma &= \frac{1}{\sqrt{1-\frac{v^{2}}{c^{2}}}} \ .
-\end{align}
+El factor de Sommerfield $S$ se define como
+\begin{equation}
+	S = \frac{|\psi(0)|^2}{|\psi_0(0)|^2},
+\end{equation}
+donde $\psi(0)$ es la función de onda no relativista considerando el potencial de interacción y $\psi_0(0)$ es la función de onda libre [1]. Así, el problema se trabaja resolviendo la ecuación de Schrödinger para $\psi(0)$ y $\psi_0(0)$. \\
+Al introducir modelos de multipletes de $SU(2)_L$ se trabajan con potenciales con forma matricial y el problema se describe mediante un sistema de ecuaciones de Schrödinger acopladas de la forma [2]
+\begin{equation}
+	\left(-\frac{1}{m_\xi}\nabla^2 + V_{ij}(r)\right)\psi_j = \psi_i.
+\end{equation}
+% Las tablas pueden construirse en el archivo directamente o insertarse como cuadro de texto o imagen. Las figuras, por su parte, deben insertarse como imagen. También puede usar dos columnas si lo necesita.
 
-Las tablas pueden construirse en el archivo directamente o insertarse como cuadro de texto o imagen. Las figuras, por su parte, deben insertarse como imagen. También puede usar dos columnas si lo necesita.
+% \begin{multicols}{2}
+% 	\begin{table}[H]
+% 		\centering
+% 		\begin{tabular}{|l|l|l|}
+% 			\hline
+% 			Nombre  & Apellido & Nota   \\ \hline
+% 			Diego   & Kosta    & $6.0$  \\ \hline
+% 			Antonio & Grassman & $5.5 $ \\ \hline
+% 		\end{tabular}\\
+% 		\vspace{0.3cm}
+% 		Tabla I. Ejemplo
+% 	\end{table}
 
-\begin{multicols}{2}
-\begin{table}[H]
-\centering
-\begin{tabular}{|l|l|l|}
-\hline
-Nombre  & Apellido & Nota   \\ \hline
-Diego   & Kosta    & $6.0$  \\ \hline
-Antonio & Grassman & $5.5 $ \\ \hline
-\end{tabular}\\
-\vspace{0.3cm}
-Tabla I. Ejemplo
-\end{table}
-
-\columnbreak                                                    
-\begin{figure}[H]
-\centerline{\includegraphics[width=3cm]{sochifilogo.png}}
-\end{figure}
-\end{multicols}
+% 	\columnbreak
+% 	\begin{figure}[H]
+% 		\centerline{\includegraphics[width=3cm]{sochifilogo.png}}
+% 	\end{figure}
+% \end{multicols}
 
 
 %------------------------------------------------
 
-\noindent \textbf{Agradecimientos:} Incluya los agradecimientos antes de las referencias.\\
+% \noindent \textbf{Agradecimientos:} Incluya los agradecimientos antes de las referencias.\\
 
 
 %------------------------------------------------
@@ -159,8 +160,9 @@ Tabla I. Ejemplo
 
 
 \noindent
-[1] O. Smith, S. Autor y S. Klein, Phys. Rev. H 60, 028793 (2009). \newline
-[2] P. Autor y T. Autor, Phyz. Rev. Lett. 118, 190603 (2017).
+[1] Jiménez Arranz, Ó. The role of the Sommerfeld enhancement in dark matter physics. (2018).\newline
+[2] M. Cirelli, A. Strumia and M. Tamburini, Cosmology and Astrophysics of Minimal Dark
+Matter, Nucl. Phys. B 787 (2007) 152 [hep-ph/0706.4071].
 
 
 
